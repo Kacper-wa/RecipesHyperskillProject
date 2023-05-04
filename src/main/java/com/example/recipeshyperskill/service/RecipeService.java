@@ -102,12 +102,15 @@ public class RecipeService {
             logger.warn("No search parameters provided!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if (category != null) {
-            recipes = recipeRepository.findAllByCategoryIgnoreCaseOrderByDateDesc(category);
+        if (category != null && name != null) {
+            recipes = recipeRepository.findAllByNameAndCategoryIgnoreCaseContainingOrderByDateDesc(name, category);
             logger.info("Recipes fetched by category: {}", category);
-        } else {
+        } else if (name != null) {
             recipes = recipeRepository.findAllByNameIgnoreCaseContainingOrderByDateDesc(name);
             logger.info("Recipes fetched by name: {}", name);
+        } else {
+            recipes = recipeRepository.findAllByCategoryIgnoreCaseContainingOrderByDateDesc(category);
+            logger.info("Recipes fetched by category: {}", category);
         }
         return new ResponseEntity<>(recipeMapper.toDtoList(recipes), HttpStatus.OK);
     }
