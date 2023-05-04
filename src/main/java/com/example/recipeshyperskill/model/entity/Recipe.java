@@ -14,12 +14,10 @@ import java.util.List;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@Table(name = Recipe.TABLE_NAME)
-
+@Table(name = "recipes")
 public class Recipe {
 
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
-    public static final String TABLE_NAME = "recipes";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
