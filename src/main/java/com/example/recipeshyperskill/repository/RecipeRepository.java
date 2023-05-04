@@ -11,10 +11,15 @@ import java.util.List;
 @Repository
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
-    @Query("select r from Recipe r where upper(r.category) = upper(?1)")
-    List<Recipe> findAllByCategoryIgnoreCaseOrderByDateDesc(@NonNull String category);
+    @Query("select r from Recipe r where upper(r.name) like upper(concat('%', ?1, '%'))")
+    List<Recipe> findAllByNameIgnoreCaseContainingOrderByDateDesc(String name);
 
-    @Query("select r from Recipe r where upper(r.name) = upper(?1)")
-    List<Recipe> findAllByNameIgnoreCaseContainingOrderByDateDesc(@NonNull String name);
+    @Query("""
+            select r from Recipe r
+            where upper(r.name) like upper(concat('%', ?1, '%')) and upper(r.category) like upper(concat('%', ?2, '%'))""")
+    List<Recipe> findAllByNameAndCategoryIgnoreCaseContainingOrderByDateDesc(String name, String category);
+
+    @Query("select r from Recipe r where upper(r.category) like upper(concat('%', ?1, '%'))")
+    List<Recipe> findAllByCategoryIgnoreCaseContainingOrderByDateDesc(String category);
 
 }
