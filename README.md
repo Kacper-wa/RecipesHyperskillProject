@@ -47,9 +47,9 @@ POST /api/recipe/new
 ```
 
 #### Retrieving a recipe
+To retrieve all recipes, send a GET request to /api/recipe/all
 To retrieve a recipe by ID, send a GET request to /api/recipe/{id}
 ```json
-onl
 GET /api/recipe/1
 {
         "name": "Warming Ginger Tea",
